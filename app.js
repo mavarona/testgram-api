@@ -1,8 +1,21 @@
 const express = require('express');
 const logger = require('morgan');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 const postRouter = require('./routes/posts');
+
+mongoose.connect(process.env.DATABASE, {
+        useNewUrlParser: true
+    },
+    err => {
+        if (!err) {
+            console.log('Connected to database')
+        } else {
+            console.log(err)
+        }
+    });
 
 const app = express();
 

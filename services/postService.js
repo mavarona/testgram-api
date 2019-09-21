@@ -1,65 +1,26 @@
 const Post = require('../models/Post')
-const posts = require('../data-source/posts')
 
 exports.getPosts = () => {
-    return new Promise(resolve => {
-        resolve(posts)
-    })
+    return Post.find()
 }
 
 exports.addPost = (caption, imageUrl, description) => {
 
-    const newId = posts.length === 0 ? 1 : posts[posts.length - 1].id + 1
+    const post = new Post()
 
-    const newPost = new Post(
-        newId,
-        caption,
-        imageUrl,
-        description
-    )
+    post.caption = caption
+    post.imageUrl = imageUrl
+    post.description = description
 
-    posts.push(newPost)
-
-    return new Promise(resolve => resolve(newPost))
+    return post.save()
 }
 
 exports.getSinglePost = (id) => {
-    let post = null;
-
-    for (let i in posts) {
-        if (posts[i].id == id) {
-            post = posts[i]
-            break;
-        }
-    }
-
-    return new Promise((resolve, reject) => {
-        if (post) {
-            resolve(post)
-        } else {
-            reject()
-        }
-    })
+    return Post.findById(id)
 }
 
 exports.updatePost = () => {}
 
 exports.deletePost = (id) => {
-    let index = -1;
-
-    for (let i in posts) {
-        if (posts[i].id == id) {
-            index = i
-            break
-        }
-    }
-
-    return new Promise((resolve, reject) => {
-        if (index > -1) {
-            const post = posts.splice(index, 1)
-            resolve(post)
-        } else {
-            reject()
-        }
-    })
+    return Post.findByIdAndDelete(id)
 }
