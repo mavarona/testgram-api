@@ -1,8 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
+const posts = require('../data-source/posts');
+
 router.get('/', (req, res) => {
-    res.send('GET /posts works!');
+    res.json(posts);
+});
+
+router.get('/:id', (req, res) => {
+    const {
+        id
+    } = req.params;
+    let post = null;
+    for (let i in posts) {
+        if (posts[i].id == id) {
+            post = posts[i];
+            break;
+        }
+    }
+    if (post) {
+        res.json(post);
+    } else {
+        res.status(404).json({
+            msg: 'Post not found'
+        })
+    }
 });
 
 router.post('/', (req, res) => {
