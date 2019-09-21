@@ -32,7 +32,27 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    res.send('DELETE /posts works!');
+    const {
+        id
+    } = req.params
+
+    let index = -1;
+
+    for (let i in posts) {
+        if (posts[i].id == id) {
+            index = i
+            break
+        }
+    }
+
+    if (index > -1) {
+        const post = posts.splice(index, 1)
+        res.json({})
+    } else {
+        res.status(404).json({
+            msg: 'Post not found.'
+        })
+    }
 });
 
 router.put('/:id', (req, res) => {
