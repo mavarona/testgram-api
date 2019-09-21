@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const postRouter = require('./routes/posts');
+const usersRouter = require('./routes/users')
 
 mongoose.connect(process.env.DATABASE, {
         useNewUrlParser: true
@@ -31,11 +32,12 @@ app.use(function(req, res, next) {
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
     extended: false
-}))
+}));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.use('/posts', postRouter);
+app.use('/', usersRouter);
 
 module.exports = app;
