@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+const authenticate = require('../middlewares/authentication');
+
 const postsController = require('../controllers/postsController');
 const postsValidator = require('../controllers/validators/postsValidator');
+
+router.use(authenticate)
 
 router.get('/', postsController.getPosts);
 
