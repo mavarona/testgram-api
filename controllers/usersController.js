@@ -1,7 +1,34 @@
-const User = require('../models/User')
+const User = require('../models/User');
 
 exports.login = (req, res) => {
-    res.send('login works!')
+    const {
+        username,
+        password
+    } = req.body
+
+    User.findOne({
+            username
+        })
+        .then(user => {
+            if (user) {
+                if (user.isValidPassword(password)) {
+                    res.json(user.genUserObj())
+                } else {
+                    res.status(401).json({
+                        msg: 'Invalid Credentials.'
+                    })
+                }
+            } else {
+                res.status(401).json({
+                    msg: 'User not found.'
+                })
+            }
+        })
+        .catch(() => {
+            res.status(500).json({
+                msg: 'Something went wrong.'
+            })
+        })
 }
 
 exports.register = (req, res) => {
