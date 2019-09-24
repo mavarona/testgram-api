@@ -6,7 +6,7 @@ const authenticate = require('../middlewares/authentication');
 const postsController = require('../controllers/postsController');
 const postsValidator = require('../controllers/validators/postsValidator');
 
-router.use(authenticate)
+//router.use(authenticate)
 
 router.get('/', postsController.getPosts);
 

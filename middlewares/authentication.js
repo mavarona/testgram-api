@@ -3,7 +3,7 @@ const User = require('../models/User')
 function authenticate(req, res, next) {
 
     let token = null;
-    console.log('authorization' + req.headers.authorization);
+    console.log('authorizationnnnnnnnnnnnnnnnn' + req.headers.authorization);
     if (typeof req.headers.authorization !== 'undefined') {
         token = req.headers['authorization'].split(' ')[1]
     }
